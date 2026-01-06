@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final-Al-Madina Building & Material Store</title>
+    <style>
+        :root {
+            --primary: #1a252f;
+            --accent: #f39c12;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --wa-green: #25D366;
+            --wa-dark: #1da851;
+            --map-blue: #4285F4;
+            --map-dark: #3367d6;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: var(--bg); overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* --- NAVIGATION & LOGO --- */
+        nav { 
+            background: var(--primary); padding: 0 5%; display: flex; 
+            justify-content: space-between; align-items: center; height: 70px;
+            position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .logo-text { 
+            color: var(--accent); font-size: 1.5rem; font-weight: 800; 
+            text-transform: uppercase; letter-spacing: 1px;
+            border: 2px solid var(--accent); padding: 5px 10px; border-radius: 4px;
+        }
+
+        /* --- FIXED HAMBURGER MENU --- */
+        .menu-wrapper { position: relative; height: 100%; display: flex; align-items: center; }
+        .hamburger { 
+            background: var(--accent); color: var(--primary); padding: 8px 18px; 
+            border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s;
+        }
+        .hamburger:hover { background: #e67e22; }
+
+        .nav-links { 
+            position: absolute; top: 100%; right: 0; background: var(--primary); 
+            width: 220px; display: none; border-radius: 0 0 8px 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5); padding-top: 5px; 
+        }
+        .menu-wrapper:hover .nav-links { display: block; } 
+        
+        .nav-links a { 
+            display: block; color: white; padding: 15px 25px; text-decoration: none; 
+            border-bottom: 1px solid #2c3e50; transition: 0.3s; cursor: pointer;
+        }
+        .nav-links a:hover { background: var(--accent); color: var(--primary); padding-left: 35px; }
+
+        /* --- HERO SECTION --- */
+        .hero { 
+            height: 50vh; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+            url('https://i.ibb.co/VYvkPzb8/background.jpg');
+            background-size: cover; background-position: center; display: flex; 
+            flex-direction: column; justify-content: center; align-items: center; color: white;
+            text-align: center; padding: 0 20px;
+        }
+
+        /* --- LAYOUT --- */
+        .container { width: 90%; max-width: 1200px; margin: 40px auto; }
+        .page { display: none; animation: fadeIn 0.4s ease-in; }
+        .active-page { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .section-title { text-align: center; margin: 40px 0; font-size: 2.2rem; color: var(--primary); }
+        .section-title span { border-bottom: 4px solid var(--accent); padding-bottom: 5px; }
+
+        /* --- PRODUCT CARDS --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .card { 
+            background: white; border-radius: 12px; overflow: hidden; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s; text-align: center;
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
+        .card img { width: 100%; height: 220px; object-fit: cover; }
+        .card h3 { padding: 18px; color: var(--primary); font-size: 1.3rem; }
+
+        /* --- GALLERY --- */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .gallery-grid img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; transition: 0.3s; }
+        .gallery-grid img:hover { transform: scale(1.03); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+        /* --- DETAIL & ABOUT VIEW --- */
+        .detail-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .back-btn { background: var(--primary); color: white; padding: 10px 25px; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 20px; font-weight: bold; transition: 0.3s; }
+        .back-btn:hover { background: var(--accent); color: var(--primary); }
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .detail-grid img { width: 100%; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        /* --- FOOTER & BUTTONS --- */
+        .btn { display: inline-block; padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: bold; color: white; transition: 0.3s; margin-top: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        
+        .btn-wa { background: var(--wa-green); }
+        .btn-wa:hover { background: var(--wa-dark); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.2); }
+        
+        .btn-map { background: var(--map-blue); }
+        .btn-map:hover { background: var(--map-dark); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.2); }
+        
+        footer { background: var(--primary); color: white; padding: 50px 20px; text-align: center; margin-top: 60px; }
+        .social-links { margin-bottom: 20px; }
+        .social-links a { color: var(--accent); text-decoration: none; margin: 0 15px; font-weight: bold; font-size: 1.1rem; transition: 0.3s; }
+        .social-links a:hover { color: white; }
+
+        @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.8rem; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo-text">Al-Madina Building</div>
+    <div class="menu-wrapper">
+        <div class="hamburger">☰ MENU</div>
+        <div class="nav-links">
+            <a onclick="showPage('home')">Home</a>
+            <a onclick="showPage('about-sec')">About Us</a>
+            <a onclick="scrollToSection('products-sec')">Products</a>
+            <a onclick="scrollToSection('gallery-sec')">Gallery</a>
+            <a onclick="scrollToSection('contact-sec')">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<div id="home" class="page active-page">
+    <header class="hero">
+        <h1>Al-Madina Building & Material Store</h1>
+        <p>Your One-Stop Construction Solution in Lahore </p>
+    </header>
+
+    <div class="container">
+        <section id="products-sec">
+            <h2 class="section-title"><span>Our Products</span></h2>
+            <div class="grid">
+                <div class="card" onclick="openProduct('cement')">
+                    <img src="https://i.ibb.co/QtrwK7b/cement.jpg"alt="Cement">
+                    <h3>Cement</h3>
+                </div>
+                <div class="card" onclick="openProduct('bricks')">
+                    <img src="https://i.ibb.co/FL4LVH3r/bricks.jpg" alt="Bricks">
+                    <h3>Bricks</h3>
+                </div>
+                <div class="card" onclick="openProduct('sand')">
+                    <img src="https://i.ibb.co/1SxwYkz/sand.jpg" alt="Sand">
+                    <h3>Sand</h3>
+                </div>
+                <div class="card" onclick="openProduct('bajri')">
+                    <img src="https://i.ibb.co/6cCrs9Sj/crush.jpg"alt="Bajri">
+                    <h3>Crush</h3>
+                </div>
+                <div class="card" onclick="openProduct('mitti')">
+                    <img src="https://i.ibb.co/fVwPs3HL/soil.jpg"alt="Mitti">
+                    <h3>Soil</h3>
+                </div>
+                <div class="card" onclick="openProduct('steel')">
+                    <img src="https://i.ibb.co/97yTYfv/steel.jpg"alt="Steel">
+                    <h3>Steel & Iron</h3>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery-sec">
+            <h2 class="section-title"><span>Some of our Projects</span></h2>
+            <div class="gallery-grid">
+                <img src="https://i.ibb.co/DDkNPfz8/project1.jpg" alt="G1">
+                <img src="https://i.ibb.co/NnHCcT98/project10.jpg" alt="G2">
+                <img src="https://i.ibb.co/GQ3Lgdcg/project4.jpg" alt="G3">
+                <img src="https://i.ibb.co/pvYjDXYC/project2.jpg" alt="G4">
+ <img src="https://i.ibb.co/NgPjDmGZ/project6.jpg" alt="G4">
+ <img src="https://i.ibb.co/0pjHmGfC/project11.jpg" alt="G4">
+ <img src="https://i.ibb.co/XrP3d86X/project7.jpg" alt="G4">
+ <img src="https://i.ibb.co/8n6fpVqG/project5.jpg" alt="G4">
+
+            </div>
+        </section>
+
+        <section id="contact-sec" style="margin-top: 80px; text-align: center;">
+            <h2 class="section-title"><span>Contact Now</span></h2>
+            <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
+                <p style="font-size: 1.2rem;"><strong>Adress: </strong>Gate 1, Sunder Industrial Estate, Lahore</p>
+                <p style="font-size: 1.2rem; margin: 10px 0;"><strong>Call: </strong>03334392780</p>
+<p style="font-size: 1.2rem; margin: 10px 0;"><strong>Office Number: </strong>03005647655</p>
+                <a href="https://wa.me/923334392780" class="btn btn-wa">WhatsApp Now</a>
+                <a href="https://share.google/CLC6VbpoUcWjkR8ZG" class="btn btn-map">Google Maps</a>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div id="about-sec" class="page">
+    <div class="container">
+        <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+        <div class="detail-card">
+            <h2 class="section-title"><span>About Us</span></h2>
+            <div class="detail-grid">
+                <img src="https://i.ibb.co/LXVXJB35/about.jpg" alt="About Al-Madina">
+                <div>
+                    <h3>Quality & Trust Since 2005</h3>
+                    <p style="margin: 20px 0; font-size: 1.1rem; line-height: 1.8;">
+                        Al-Madina Building & Material Store is a professional and trusted supplier of construction materials based in Lahore. For the past 20+ years, we have been proudly serving the Sunder Industrial Estate and Raiwind Road areas with premium-quality building materials.
+                    </p>
+                    <p style="margin-bottom: 20px;">
+                        <strong>Owner:</strong> Rana Jabbar Khan<br>
+                        <strong>Experience:</strong> Over 20 years in the construction material industry<br>
+                        <strong>Specialty:</strong> Authorized Dealer of Top Cement Brands.
+                    </p>
+                    <p>Our mission is to provide high-quality construction materials at competitive prices, ensuring timely delivery and reliable service so that every project we support is strong, durable, and long-lasting.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="product-detail" class="page">
+    <div class="container">
+        <button class="back-btn" onclick="showPage('home')">← Back to Menu</button>
+        <div id="detail-content" class="detail-card"></div>
+    </div>
+</div>
+
+<footer>
+    <div class="social-links">
+        <a href="https://facebook.com/" target="_blank">Facebook</a>
+        <a href="https://instagram.com/" target="_blank">Instagram</a>
+        <a href="https://wa.me/923334392780">WhatsApp</a>
+<a href="mailto:almadinabuildingandmaterial@gmail.com?subject=Construction%20Material%20Inquiry">Email Us</a>
+    </div>
+    <p>© 2026 Al-Madina Building & Material Store. All Rights Reserved.</p>
+</footer>
+
+<script>
+    const productData = {
+        cement: { title: "Cement Brands", desc: "We offer Lucky, Bestway, DG, and Maple Leaf Cement, including White Cement, Metro, Bond, and more.", img: "https://i.ibb.co/LDKj9VL5/cement.webp", items: "All stock is fresh and available at the best market rates." },
+        bricks: { title: "Quality Bricks", desc: "High-quality pre-fired bricks at very reasonable rates.", img: "https://i.ibb.co/zYJGsTL/Awal-int.jpg", items: "We stock Awal, Do-Yam, and Special bricks." },
+        sand: { title: "Sand", desc: "Ravi and Chenab River sand, ideal for plastering and filling.", img: "https://i.ibb.co/fVX7MC7b/sand.jpg", items: "Fine-quality sand suitable for all construction purposes." },
+        bajri: { title: "Bajri (Crush)", desc: "<strong>Crush Available: </strong> Plant-mixed crush from Sargodha and Margalla, available in all sizes", img: "https://i.ibb.co/9mxF3xSQ/crush.jpg", items: "High-quality crush, including 3/4 and 1/2 sizes, suitable for all types of construction work." },
+        mitti: { title: "Mitti (Soil)", desc: "<strong>Soil Available:</strong> Bhal soil and economical filling soil available at affordable rates.", img: "https://i.ibb.co/BMZtzXN/soillll.jpg", items: "Best for gardening and building base." },
+        steel: { title: "Steel & Iron", desc: "<strong>Steel Bars Available:</strong> Grade 60 steel bars from Mughal and Ittehad Steel are available.", img: "https://i.ibb.co/hxPykwMY/sarya.png", items: "All sizes of Steel bars available." }
+    };
+
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(pageId).classList.add('active-page');
+        window.scrollTo(0,0);
+    }
+
+    function scrollToSection(id) {
+        showPage('home');
+        setTimeout(() => {
+            const el = document.getElementById(id);
+            if(el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 50);
+    }
+
+    function openProduct(id) {
+        const p = productData[id];
+        document.getElementById('detail-content').innerHTML = `
+            <div class="detail-grid">
+                <img src="${p.img}" alt="${p.title}">
+                <div>
+                    <h1>${p.title}</h1>
+                    <p style="font-size:1.2rem; margin:20px 0;">${p.desc}</p>
+                    <p><strong>Note:</strong> ${p.items}</p>
+                    <a href="https://wa.me/923334392780" class="btn btn-wa" style="margin-left:0;">Order Now</a>
+                </div>
+            </div>
+        `;
+        showPage('product-detail');
+    }
+</script>
+
+</body>
+</html>
