@@ -7,7 +7,7 @@
 
 <meta name="title" content="Al-Madina Building & Material Store | Best Material in Lahore">
 <meta name="description" content="Al-Madina Building & Material Store Lahore: Authorized dealer for Lucky & Bestway Cement. Premium Bricks, Steel, Sand, and Crush near Sunder Industrial Estate. Best rates guaranteed.">
-<meta name="keywords" content="Building Material Store Lahore, Al-Madina Store, Bricks price Lahore, Cement dealer Lahore, Sunder Industrial Estate material supplier, Rana Jabbar Khan construction, rana jabbar, rana jabbar khan, Rana Jabbar Khan, khan saab, Khan Saab Store">
+<meta name="keywords" content="Building Material Store Lahore, Al-Madina Store, Bricks price Lahore, Cement dealer Lahore, Sunder Industrial Estate material supplier, Rana Jabbar Khan construction">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://almadinabuildingandmaterial-jpg.github.io/al-madina-building-store/">
@@ -39,13 +39,15 @@
             color: var(--accent); font-size: 1.5rem; font-weight: 800; 
             text-transform: uppercase; letter-spacing: 1px;
             border: 2px solid var(--accent); padding: 5px 10px; border-radius: 4px;
+            cursor: pointer;
         }
 
-        /* --- FIXED HAMBURGER MENU --- */
+        /* --- MOBILE MENU (UPDATED) --- */
         .menu-wrapper { position: relative; height: 100%; display: flex; align-items: center; }
         .hamburger { 
             background: var(--accent); color: var(--primary); padding: 8px 18px; 
             border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s;
+            user-select: none; /* Prevent text selection */
         }
         .hamburger:hover { background: #e67e22; }
 
@@ -54,7 +56,9 @@
             width: 220px; display: none; border-radius: 0 0 8px 8px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.5); padding-top: 5px; 
         }
-        .menu-wrapper:hover .nav-links { display: block; } 
+        
+        /* New Class to show menu via JS */
+        .nav-links.active { display: block; }
         
         .nav-links a { 
             display: block; color: white; padding: 15px 25px; text-decoration: none; 
@@ -62,51 +66,24 @@
         }
         .nav-links a:hover { background: var(--accent); color: var(--primary); padding-left: 35px; }
 
-        /* --- HERO SLIDESHOW SECTION (UPDATED) --- */
+        /* --- HERO SLIDESHOW SECTION --- */
         .hero { 
-            position: relative;
-            height: 50vh; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            color: white;
-            text-align: center; 
-            padding: 0 20px;
-            overflow: hidden;
-            background: #000; /* Fallback color */
+            position: relative; height: 50vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; color: white;
+            text-align: center; padding: 0 20px; overflow: hidden; background: #000;
         }
-
-        /* Container for slides */
-        .hero-slider {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1; 
-        }
-
-        /* Individual Slide */
+        .hero-slider { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
         .slide {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1s ease-in-out; 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 1s ease-in-out; 
         }
-        
-        /* Dark overlay */
         .slide::after {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); 
         }
-
         .slide.active { opacity: 1; }
-
-        /* Hero Text Content */
-        .hero-content {
-            position: relative;
-            z-index: 2; 
-        }
+        .hero-content { position: relative; z-index: 2; }
 
         /* --- LAYOUT --- */
         .container { width: 90%; max-width: 1200px; margin: 40px auto; }
@@ -132,7 +109,7 @@
         .review-card { background: white; padding: 20px; border-left: 5px solid var(--accent); border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .stars { color: var(--accent); margin-bottom: 10px; }
 
-        /* --- TEAM / LEADERSHIP SECTION (NEW) --- */
+        /* --- TEAM / LEADERSHIP SECTION --- */
         .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 20px; }
         .team-card { 
             background: white; border-radius: 12px; padding: 30px 20px; text-align: center; 
@@ -182,10 +159,10 @@
 <body>
 
 <nav>
-    <div class="logo-text">Al-Madina Building</div>
+    <div class="logo-text" onclick="showPage('home')">Al-Madina Building</div>
     <div class="menu-wrapper">
-        <div class="hamburger">☰ MENU</div>
-        <div class="nav-links">
+        <div class="hamburger" id="hamburgerBtn" onclick="toggleMenu(event)">☰ MENU</div>
+        <div class="nav-links" id="navMenu">
             <a onclick="showPage('home')">Home</a>
             <a onclick="showPage('about-sec')">About Us</a>
             <a onclick="scrollToSection('products-sec')">Products</a>
@@ -320,7 +297,7 @@
 
 <div id="about-sec" class="page">
     <div class="container">
-        <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+        <button class="back-btn" onclick="goBack()">← Back</button>
         <div class="detail-card">
             <h2 class="section-title"><span>Our Legacy</span></h2>
             <div class="detail-grid">
@@ -359,7 +336,7 @@
 
 <div id="product-detail" class="page">
     <div class="container">
-        <button class="back-btn" onclick="showPage('home')">← Back to Menu</button>
+        <button class="back-btn" onclick="goBack()">← Back to Menu</button>
         <div id="detail-content" class="detail-card"></div>
     </div>
 </div>
@@ -375,6 +352,26 @@
 </footer>
 
 <script>
+    // --- 1. MENU LOGIC (CLICK & AUTO CLOSE) ---
+    function toggleMenu(event) {
+        event.stopPropagation(); // Stop click from closing menu immediately
+        document.getElementById('navMenu').classList.toggle('active');
+    }
+
+    function closeMenu() {
+        document.getElementById('navMenu').classList.remove('active');
+    }
+
+    // Close menu when clicking anywhere outside
+    document.addEventListener('click', function(event) {
+        const nav = document.getElementById('navMenu');
+        const hamburger = document.getElementById('hamburgerBtn');
+        if (!nav.contains(event.target) && event.target !== hamburger) {
+            closeMenu();
+        }
+    });
+
+    // --- 2. DATA ---
     const productData = {
         cement: { title: "Cement Brands", desc: "We offer Lucky, Bestway, DG, and Maple Leaf Cement, including White Cement and more.", img: "https://i.ibb.co/LDKj9VL5/cement.webp", items: "Fresh stock available at best market rates." },
         bricks: { title: "Quality Bricks", desc: "High-quality Awal bricks for strong foundations.", img: "https://i.ibb.co/zYJGsTL/Awal-int.jpg", items: "We stock Awal, Do-Yam, and Special bricks." },
@@ -384,13 +381,68 @@
         steel: { title: "Steel & Iron", desc: "Grade 60 steel bars from top mills.", img: "https://i.ibb.co/hxPykwMY/sarya.png", items: "Mughal and Ittehad Steel also available." }
     };
 
-    function showPage(pageId) {
+    // --- 3. PAGE NAVIGATION & HISTORY API (FIX BACK BUTTON) ---
+    
+    // Internal Function to switch view
+    function switchView(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-        document.getElementById(pageId).classList.add('active-page');
-        window.scrollTo(0,0);
+        const el = document.getElementById(pageId);
+        if(el) {
+            el.classList.add('active-page');
+            window.scrollTo(0,0);
+        }
     }
 
+    // Function called by Links
+    function showPage(pageId) {
+        closeMenu(); // Close menu automatically
+        
+        // Push state to history so Back button works
+        // Only push if it's a new page
+        if (!history.state || history.state.page !== pageId) {
+            history.pushState({ page: pageId }, "", "#" + pageId);
+        }
+        
+        switchView(pageId);
+    }
+
+    // Handle Browser Back Button
+    window.onpopstate = function(event) {
+        if (event.state && event.state.page) {
+            switchView(event.state.page);
+        } else {
+            // If no state (e.g. initial load), go home
+            switchView('home');
+        }
+    };
+
+    // Helper for internal Back buttons
+    function goBack() {
+        if(window.history.length > 1) {
+            window.history.back();
+        } else {
+            showPage('home');
+        }
+    }
+
+    // Initialize on Load (Handle direct links)
+    window.addEventListener('load', function() {
+        const hash = window.location.hash.substring(1);
+        if (hash && document.getElementById(hash)) {
+            // Replace initial state
+            history.replaceState({ page: hash }, "", "#" + hash);
+            switchView(hash);
+        } else {
+            // Default State
+            history.replaceState({ page: 'home' }, "", "#home");
+            switchView('home');
+        }
+    });
+
+    // --- 4. OTHER FUNCTIONS ---
+
     function scrollToSection(id) {
+        // Ensure we are on home first
         showPage('home');
         setTimeout(() => {
             const el = document.getElementById(id);
